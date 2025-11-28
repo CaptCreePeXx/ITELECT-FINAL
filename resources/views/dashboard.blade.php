@@ -17,14 +17,21 @@
     </div>
     
     <div class="flex space-x-4 items-center">
-        <span class="text-gray-300">{{ Auth::user()->name }}</span>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf   
-            <button type="submit" class="px-4 py-2 rounded-lg font-semibold text-black bg-yellow-400 hover:bg-yellow-500 transition duration-300 shadow-md">
-                Logout
-            </button>
-        </form>
-    </div>
+    <!-- Link user name to Profile page -->
+    <a href="{{ route('profile.edit') }}" 
+       class="text-gray-300 hover:text-yellow-400 transition duration-300 font-medium">
+        {{ Auth::user()->name }}
+    </a>
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf   
+        <button type="submit" 
+                class="px-4 py-2 rounded-lg font-semibold text-black bg-yellow-400 hover:bg-yellow-500 transition duration-300 shadow-md">
+            Logout
+        </button>
+    </form>
+</div>
+
 </nav>
 
 
@@ -40,20 +47,58 @@
 
     <!-- Appointments Card (Clickable) -->
 @if(Auth::user()->role === 'patient')
+    <!-- Patient Dashboard -->
     <a href="{{ route('appointments.index') }}" class="group">
         <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
             <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">Appointments</h2>
             <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">View and manage your appointments.</p>
         </div>
     </a>
+
+
 @elseif(Auth::user()->role === 'receptionist')
+    <!-- Receptionist Dashboard -->
     <a href="{{ route('appointments.manage') }}" class="group">
         <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
             <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">Manage Appointments</h2>
             <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">View and handle pending appointment requests.</p>
         </div>
     </a>
+
+
+@elseif(Auth::user()->role === 'admin')
+    <!-- ADMIN DASHBOARD -->
+    
+    <!-- 1. View All Patient Appointments -->
+    <a href="{{ route('appointments.index') }}" class="group">
+        <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+            <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">All Appointments</h2>
+            <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">View all patient appointments.</p>
+        </div>
+    </a>
+
+    <!-- 2. Manage Receptionist Appointments -->
+    <a href="{{ route('appointments.manage') }}" class="group">
+        <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+            <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                Receptionist Panel
+            </h2>
+            <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                View and manage receptionist-controlled appointments.
+            </p>
+        </div>
+    </a>
+
+    <!-- 3. Manage Users (optional) -->
+    <a href="{{ route('admin.users') }}" class="group">
+        <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+            <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">User Management</h2>
+            <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">Add, edit, or remove users including receptionists.</p>
+        </div>
+    </a>
+
 @endif
+
 
 
 

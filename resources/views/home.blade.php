@@ -11,7 +11,7 @@
     <!-- Navigation Bar -->
     <nav class="w-full flex justify-between items-center px-6 py-4 bg-black bg-opacity-50 shadow-md fixed top-0 left-0 z-50">
         <div class="text-2xl font-bold text-yellow-400">
-            Dental Clinic Management System
+            Dental Clinic Appointment System
         </div>
         <div class="flex space-x-4">
             <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg font-semibold text-black bg-yellow-400 hover:bg-yellow-500 transition duration-300 shadow-md">

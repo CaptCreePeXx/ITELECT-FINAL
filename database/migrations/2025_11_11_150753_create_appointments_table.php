@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('service');
             $table->date('date');
             $table->time('time');
-            $table->enum('status', ['Pending', 'Confirmed', 'Completed', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['Pending', 'Accepted', 'Declined', 'Completed'])->default('Pending');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');

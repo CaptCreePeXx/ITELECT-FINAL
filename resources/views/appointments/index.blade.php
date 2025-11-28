@@ -35,7 +35,7 @@
                                 @foreach($appointments as $appointment)
                                     <tr class="hover:bg-gray-700/60 transition">
                                         <td class="py-3 px-6">{{ $appointment->date }}</td>
-                                        <td class="py-3 px-6">{{ $appointment->time }}</td>
+                                        <td class="py-3 px-6">{{ \Carbon\Carbon::parse($appointment->time)->format('h:i A') }}</td>
                                         <td class="py-3 px-6">{{ $appointment->service }}</td>
                                         <td class="py-3 px-6">
                                             <span @class([
