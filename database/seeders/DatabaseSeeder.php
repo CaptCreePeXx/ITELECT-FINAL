@@ -17,9 +17,17 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
+        // Create a Dentist
+        User::factory()->create([
+            'name' => 'Dentist User',
+            'email' => 'dentist@example.com',
+            'password' => bcrypt('captcreepex1'),
+            'role' => 'dentist',
+        ]);
+
         // Create a Test Patient
         User::factory()->create([
-            'name' => 'Test Patient',
+            'name' => 'Patient User',
             'email' => 'test@example.com',
             'password' => bcrypt('captcreepex1'),
             'role' => 'patient',

@@ -40,6 +40,7 @@
                         <option value="">Select Role</option>
                         <option value="patient" {{ old('role') == 'patient' ? 'selected' : '' }}>Patient</option>
                         <option value="receptionist" {{ old('role') == 'receptionist' ? 'selected' : '' }}>Receptionist</option>
+                        <option value="dentist" {{ old('role') == 'dentist' ? 'selected' : '' }}>Dentist</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                     </select>
                 </div>

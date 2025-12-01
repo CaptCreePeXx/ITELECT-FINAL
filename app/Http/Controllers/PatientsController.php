@@ -10,7 +10,10 @@ class PatientsController extends Controller
     public function index()
     {
         // Only show appointments that belong to the logged-in patient
-        $appointments = Appointment::where('patient_id', auth()->id())->get();
+          $appointments = Appointment::where('patient_id', auth()->id())
+            ->where('status', '!=', 'Cancelled') // hide cancelled
+            ->get();
+
         return view('appointments.index', compact('appointments'));
     }
 
@@ -82,4 +85,15 @@ class PatientsController extends Controller
 
         return redirect()->route('appointments.index')->with('success', 'Appointment deleted successfully!');
     }
+
+    public function requestCancel(Request $request, Appointment $appointment)
+{
+    $appointment->cancel_requested = true;
+    $appointment->cancel_reason = $request->cancel_reason;
+    $appointment->save();
+
+    return response()->json(['success' => true]);
+}
+
+
 }

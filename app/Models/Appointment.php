@@ -16,10 +16,16 @@ class Appointment extends Model
         'date',
         'time',
         'status',
+        'note', // add note if you are using it
     ];
 
     public function patient()
     {
         return $this->belongsTo(User::class, 'patient_id');
+    }
+
+    public function dentist()
+    {
+        return $this->belongsTo(User::class, 'dentist_id');
     }
 }

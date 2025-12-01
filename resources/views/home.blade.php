@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - My Laravel App</title>
+    <title>Home - Dental Appointment</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-yellow-400">
+<body class="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-yellow-400">
 
     <!-- Navigation Bar -->
     <nav class="w-full flex justify-between items-center px-6 py-4 bg-black bg-opacity-50 shadow-md fixed top-0 left-0 z-50">
@@ -24,7 +24,7 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="flex flex-col justify-center items-center text-center min-h-screen pt-24">
+    <div class="flex-grow flex flex-col justify-center items-center text-center pt-24">
         <!-- Header -->
         <h1 class="text-5xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600">
                 Welcome to the Dental Clinic

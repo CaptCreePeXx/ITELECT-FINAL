@@ -61,6 +61,50 @@
                 @endif
             </div>
 
+            <!-- Dentists Table -->
+            <div class="bg-gray-800 bg-opacity-90 shadow-lg rounded-2xl p-6 border border-yellow-400/30">
+                <h3 class="text-2xl text-white font-semibold mb-6 text-center">Dentists</h3>
+
+                @if($dentists->count() > 0)
+                    <div class="overflow-x-auto rounded-xl shadow-lg">
+                        <table class="min-w-full text-yellow-300">
+                            <thead class="bg-gray-900 text-yellow-400 uppercase text-sm tracking-wider">
+                                <tr>
+                                    <th class="py-3 px-6 text-left">ID</th>
+                                    <th class="py-3 px-6 text-left">Name</th>
+                                    <th class="py-3 px-6 text-left">Email</th>
+                                    <th class="py-3 px-6 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-600">
+                                @foreach($dentists as $user)
+                                    <tr class="hover:bg-gray-700/60 transition">
+                                        <td class="py-3 px-6">{{ $user->id }}</td>
+                                        <td class="py-3 px-6">{{ $user->name }}</td>
+                                        <td class="py-3 px-6">{{ $user->email }}</td>
+                                        <td class="py-3 px-6 flex gap-2">
+                                            <a href="{{ route('admin.users.edit', $user->id) }}"
+                                            class="text-white px-3 py-1 rounded hover:bg-yellow-400/90 hover:text-black bg-transparent border border-gray-100">
+                                            Edit
+                                            </a>
+                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-500">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <p class="text-yellow-400 mt-4 text-center text-lg">No dentists found.</p>
+                @endif
+            </div>
+
             <!-- Receptionists Table -->
             <div class="bg-gray-800 bg-opacity-90 shadow-lg rounded-2xl p-6 border border-yellow-400/30">
                 <h3 class="text-2xl text-white font-semibold mb-6 text-center">Receptionists</h3>

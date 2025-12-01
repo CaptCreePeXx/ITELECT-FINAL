@@ -27,18 +27,22 @@ class AuthenticatedSessionController extends Controller
     $request->authenticate();
     $request->session()->regenerate();
 
-    $user = Auth::user(); // get the logged-in user
+    $user = Auth::user();
+
+    // Flash success message
+    $request->session()->flash('success', 'Successfully Logged in.');
 
     // Role-based redirect
     if ($user->role === 'admin') {
         return redirect()->route('dashboard');
     } elseif ($user->role === 'receptionist') {
         return redirect()->route('dashboard');
+    } elseif ($user->role === 'dentist') {
+        return redirect()->route('dentist.dashboard');
     } else { // patient
         return redirect()->route('dashboard');
     }
 }
-
 
     /**
      * Destroy an authenticated session.
