@@ -78,8 +78,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('appointments', PatientsController::class);
     });
     Route::post('/appointments/{appointment}/request-cancel', [PatientsController::class, 'requestCancel'])->name('appointments.requestCancel');
+    Route::get('/appointments/{appointment}/details', [PatientsController::class, 'showDetailsHtml'])->name('appointments.details.html');
 
-        /*
+    /*
     |-------------------------------------------------------------------------- 
     | Receptionist Routes
     |-------------------------------------------------------------------------- 
@@ -97,6 +98,7 @@ Route::middleware('auth')->group(function () {
         // Accept or decline appointments
         Route::post('/receptionist/{id}/accept', [ReceptionistController::class, 'accept'])->name('appointments.accept');
         Route::post('/receptionist/{id}/decline', [ReceptionistController::class, 'decline'])->name('appointments.decline');
+        Route::put('/appointments/{appointment}/decline', [ReceptionistController::class, 'decline'])->name('appointments.decline');
 
         // Update note (matches your blade form)
         Route::put('/appointments/{appointment}/update-note', [ReceptionistController::class, 'updateNote'])->name('appointments.updateNote');
@@ -110,12 +112,20 @@ Route::middleware('auth')->group(function () {
         // web.php
 Route::post('/appointments/{id}/cancel-handled', [ReceptionistController::class, 'cancelRequestHandled'])
     ->name('appointments.cancelRequestHandled');
-
-
-
     });
+    
+});
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dentist/dashboard', [DentistController::class, 'dashboard'])->name('dentist.dashboard');
 
+    Route::get('/dentist/schedule', [DentistController::class, 'schedule'])->name('dentist.schedule');
+
+    Route::get('/dentist/appointment/{id}', [DentistController::class, 'viewAppointment'])->name('dentist.appointment.view');
+
+    Route::post('/dentist/appointment/{id}/notes', [DentistController::class, 'saveNotes'])->name('dentist.notes.save');
+
+    Route::post('/dentist/appointment/{id}/complete', [DentistController::class, 'completeAppointment'])->name('dentist.appointment.complete');
 });
 
 // Include Laravel Breeze/Jetstream auth routes

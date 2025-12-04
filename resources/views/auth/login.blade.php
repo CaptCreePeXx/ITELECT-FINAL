@@ -48,8 +48,8 @@
             required>
             <option value="patient">Patient</option>
             <option value="receptionist">Receptionist</option>
-            <option value="admin">Admin</option>
             <option value="dentist">Dentist</option>
+            <option value="admin">Admin</option>
         </select>
     </div>
 

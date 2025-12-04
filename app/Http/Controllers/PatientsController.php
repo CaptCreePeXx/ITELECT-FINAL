@@ -22,24 +22,35 @@ class PatientsController extends Controller
         return view('appointments.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'date' => 'required|date',
-            'time' => 'required',
-            'service' => 'required|string|max:255',
-        ]);
+    // App/Http/Controllers/PatientsController.php (CORRECTED store method)
 
-        Appointment::create([
-            'patient_id' => auth()->id(),
-            'service' => $request->service,
-            'date' => $request->date,
-            'time' => $request->time,
-            'status' => 'Pending',
-        ]);
+public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'date' => 'required|date',
+        'time' => 'required',
+        'service' => 'required|string|max:255',
+        // 1. ADD VALIDATION for the 'note' field from the form
+        'note' => 'nullable|string|max:1000', 
+    ]);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment booked successfully!');
-    }
+    Appointment::create([
+        'patient_id' => auth()->id(),
+        'service' => $validatedData['service'], // Use validated data
+        'date' => $validatedData['date'],
+        'time' => $validatedData['time'],
+
+        // 2. ADD the new 'patient_reason' field using the submitted 'note' data
+        'patient_reason' => $validatedData['note'] ?? null, 
+
+        // 3. Ensure the 'note' field (reserved for the receptionist) is null
+        'note' => null, 
+        
+        'status' => 'Pending',
+    ]);
+
+    return redirect()->route('appointments.index')->with('success', 'Appointment booked successfully!');
+}
 
     public function edit(Appointment $appointment)
     {
@@ -93,6 +104,20 @@ class PatientsController extends Controller
     $appointment->save();
 
     return response()->json(['success' => true]);
+}
+
+public function showDetailsHtml(Appointment $appointment)
+{
+    // 1. SECURITY CHECK: Ensure the logged-in user (patient) owns this appointment.
+    // auth()->id() retrieves the currently logged-in user's ID.
+    // $appointment->patient_id is the ID of the user who booked the appointment.
+    if (auth()->id() !== $appointment->patient_id) {
+        // If the IDs don't match, block the request and return an error.
+        abort(403, 'Unauthorized action. This appointment does not belong to your account.');
+    }
+    
+    // 2. Return the Detail View Partial (only if the user is authorized).
+    return view('appointments._partials._detail-view', compact('appointment'));
 }
 
 

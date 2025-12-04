@@ -20,6 +20,7 @@ class ReceptionistController extends Controller
 
         // Active / Accepted appointments
         $activeAppointments = Appointment::where('status', 'Accepted')
+            ->where('is_cancelled', false)
             ->latest()
             ->with('patient', 'dentist')
             ->get();
@@ -27,6 +28,7 @@ class ReceptionistController extends Controller
         // Ongoing today
         $ongoingAppointments = Appointment::where('status', 'Accepted')
             ->where('date', $today)
+            ->where('is_cancelled', false)
             ->latest()
             ->with('patient', 'dentist')
             ->get();
@@ -58,7 +60,7 @@ class ReceptionistController extends Controller
         // Dentists
         $dentists = User::where('role', 'dentist')->get();
 
-        return view('receptionist.manage', compact(
+        return view('receptionist.dashboard', compact(
             'pendingAppointments',
             'activeAppointments',
             'ongoingAppointments',
@@ -93,12 +95,12 @@ class ReceptionistController extends Controller
     public function decline(Request $request, $id)
     {
         $request->validate([
-            'note' => 'nullable|string|max:255',
+            'note' => 'required|string|max:255', // make required here for modal
         ]);
 
         $appointment = Appointment::findOrFail($id);
         $appointment->status = 'Declined';
-        $appointment->note = $request->note;
+        $appointment->note = $request->note; 
         $appointment->save();
 
         return redirect()->back()->with('success', 'Appointment declined.');
@@ -134,18 +136,23 @@ class ReceptionistController extends Controller
         return redirect()->back()->with('success', 'Note updated successfully.');
     }
 
-    public function cancelRequestHandled($appointmentId)
-    {
-        $appointment = Appointment::findOrFail($appointmentId);
+    public function cancelRequestHandled(Request $request, $appointmentId)
+{
+    $appointment = Appointment::findOrFail($appointmentId);
 
-        // Mark the cancellation as handled
-        $appointment->cancel_requested = false;
-        $appointment->cancel_reason = null;
+    // Mark the cancellation as handled
+    $appointment->cancel_requested = false;
+    $appointment->is_cancelled = true;
 
-        // Option 2: set is_cancelled flag instead of changing status
-        $appointment->is_cancelled = true;
-        $appointment->save();
-
-        return redirect()->back()->with('success', 'Cancellation request handled successfully.');
+    // Keep the existing reason from the patient, only use receptionist reason if none exists
+    if (!$appointment->cancel_reason) {
+        $appointment->cancel_reason = 'Cancelled by receptionist';
     }
+
+    $appointment->save();
+
+    return redirect()->back()->with('success', 'Cancellation request handled successfully.');
+}
+
+
 }

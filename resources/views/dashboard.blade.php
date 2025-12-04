@@ -62,79 +62,71 @@
 
         <div class="grid grid-cols-1 place-items-center gap-6 w-full max-w-md">
 
-            @if(Auth::user()->role === 'patient')
-                <a href="{{ route('appointments.index') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            Appointments
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            View and manage your appointments.
-                        </p>
-                    </div>
-                </a>
+    @if(Auth::user()->role === 'patient')
+        <a href="{{ route('appointments.index') }}" class="group w-full">
+            <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+                <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                    Appointments
+                </h2>
+                <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                    View and manage your appointments.
+                </p>
+            </div>
+        </a>
+    @endif
 
-            @elseif(Auth::user()->role === 'receptionist')
-                <a href="{{ route('appointments.manage') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            Manage Appointments
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            View and handle pending appointment requests.
-                        </p>
-                    </div>
-                </a>
+    @if(Auth::user()->role === 'receptionist')
+        <a href="{{ route('appointments.manage') }}" class="group w-full">
+            <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+                <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                    Manage Appointments
+                </h2>
+                <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                    View and handle pending appointment requests.
+                </p>
+            </div>
+        </a>
+    @endif
 
-            @if(Auth::user()->role === 'dentist')
-                <a href="{{ route('dentist.schedule') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            My Schedule
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            View your daily appointments and schedule.
-                        </p>
-                    </div>
-                </a>
-            @endif
+    @if(Auth::user()->role === 'dentist')
+        <a href="{{ route('dentist.dashboard') }}" class="group w-full">
+            <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+                <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                    My Schedule
+                </h2>
+                <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                    View your daily appointments and schedule.
+                </p>
+            </div>
+        </a>
+    @endif
 
-            @elseif(Auth::user()->role === 'admin')
-                <a href="{{ route('admin.appointments') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            All Appointments
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            View all patient appointments.
-                        </p>
-                    </div>
-                </a>
+    @if(Auth::user()->role === 'admin')
+        <a href="{{ route('admin.appointments') }}" class="group w-full">
+            <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+                <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                    All Appointments
+                </h2>
+                <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                    View all patient appointments.
+                </p>
+            </div>
+        </a>
 
-                <!--<a href="{{ route('appointments.manage') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            Receptionist Panel
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            View and manage receptionist-controlled appointments.
-                        </p>
-                    </div>
-                </a>-->
+        <a href="{{ route('admin.users') }}" class="group w-full">
+            <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
+                <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
+                    User Management
+                </h2>
+                <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
+                    Add, edit, or remove users including receptionists.
+                </p>
+            </div>
+        </a>
+    @endif
 
-                <a href="{{ route('admin.users') }}" class="group w-full">
-                    <div class="bg-gray-700 bg-opacity-70 p-6 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-yellow-300/50">
-                        <h2 class="text-xl font-bold mb-2 text-yellow-400 group-hover:text-yellow-300 transition">
-                            User Management
-                        </h2>
-                        <p class="text-gray-300 text-sm group-hover:text-yellow-200 transition">
-                            Add, edit, or remove users including receptionists.
-                        </p>
-                    </div>
-                </a>
-            @endif
+</div>
 
-        </div>
     </main>
 
     <!-- Footer (fixed at bottom like homepage) -->
